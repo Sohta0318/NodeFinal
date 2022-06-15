@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import useFetch from "../../service/constant/useFetch";
 import axios from "axios";
@@ -9,9 +9,22 @@ import { useLoggedIn } from "../../service/constant/useLoggedIn";
 const Edit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: incomeData } = useFetch(`/incomes/${id}`);
+  const { data: incomeData } = useFetch(
+    `https://expense-app99.herokuapp.com/incomes/${id}`
+  );
   const { token } = useLoggedIn();
-  const { data: typeData } = useFetch("/types");
+  const { data: typeData } = useFetch(
+    "https://expense-app99.herokuapp.com/types"
+  );
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (typeData) {
+      const filteredType = typeData.filter((type) => {
+        return type.category === 0;
+      });
+      setData(filteredType);
+    }
+  }, [typeData]);
   const {
     register,
     handleSubmit,
@@ -33,9 +46,13 @@ const Edit = () => {
       type: data.category,
     };
     try {
-      await axios.patch(`/incomes/${id}`, income, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.patch(
+        `https://expense-app99.herokuapp.com/incomes/${id}`,
+        income,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       navigate(-1);
     } catch (error) {
       console.log(error);
@@ -81,8 +98,8 @@ const Edit = () => {
                   <option value="" hidden>
                     Category
                   </option>
-                  {typeData &&
-                    typeData.map((type) => {
+                  {data &&
+                    data.map((type) => {
                       return (
                         <option key={type._id} value={type._id}>
                           {type.name}

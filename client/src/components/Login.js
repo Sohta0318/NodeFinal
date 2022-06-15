@@ -27,8 +27,10 @@ const Login = () => {
       password: data.password,
     };
     try {
-      const res = await axios.post("/users/login", user);
-      console.log(res);
+      const res = await axios.post(
+        "https://expense-app99.herokuapp.com/users/login",
+        user
+      );
       const userInfo = res.data.user;
       const token = res.data.token;
       localStorage.setItem("token", token);

@@ -9,7 +9,9 @@ import useFetch from "../../service/constant/useFetch";
 const Create = () => {
   const navigate = useNavigate();
   const { token } = useLoggedIn();
-  const { data: typeData } = useFetch("/types");
+  const { data: typeData } = useFetch(
+    "https://expense-app99.herokuapp.com/types"
+  );
   const [data, setData] = useState([]);
   useEffect(() => {
     if (typeData) {
@@ -34,7 +36,7 @@ const Create = () => {
       type: data.category,
     };
     try {
-      await axios.post("/incomes", income, {
+      await axios.post("https://expense-app99.herokuapp.com/incomes", income, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate(-1);

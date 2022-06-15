@@ -11,7 +11,7 @@ const Detail = () => {
     try {
       if (account) {
         axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-        await axios.post("users/logout");
+        await axios.post("https://expense-app99.herokuapp.com/users/logout");
         localStorage.clear();
         navigate("/register");
       } else {
@@ -22,12 +22,16 @@ const Detail = () => {
     }
   };
   const { id } = useParams();
-  const { data: spendData } = useFetch(`/spends/${id}`);
-  const { data: typeData } = useFetch(`/types/${spendData && spendData.type}`);
+  const { data: spendData } = useFetch(
+    `https://expense-app99.herokuapp.com/spends/${id}`
+  );
+  const { data: typeData } = useFetch(
+    `https://expense-app99.herokuapp.com/types/${spendData && spendData.type}`
+  );
   const deleteHandler = async () => {
     try {
       axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-      await axios.delete(`/spends/${id}`);
+      await axios.delete(`https://expense-app99.herokuapp.com/spends/${id}`);
       navigate("/");
     } catch (error) {
       console.log(error);

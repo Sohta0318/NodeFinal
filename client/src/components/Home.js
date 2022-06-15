@@ -7,13 +7,17 @@ import useFetch from "../service/constant/useFetch";
 const Home = () => {
   const navigate = useNavigate();
   const { account, token } = useLoggedIn();
-  const { data: incomeData } = useFetch("/incomes");
-  const { data: spendData } = useFetch("/spends");
+  const { data: incomeData } = useFetch(
+    "https://expense-app99.herokuapp.com/incomes"
+  );
+  const { data: spendData } = useFetch(
+    "https://expense-app99.herokuapp.com/spends"
+  );
   const logoutHandler = async () => {
     try {
       if (account) {
         axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-        await axios.post("users/logout");
+        await axios.post("https://expense-app99.herokuapp.com/users/logout");
         localStorage.clear();
         navigate("/register");
       } else {

@@ -20,11 +20,10 @@ const Category = () => {
       category: 0,
     };
     try {
-      const res = await axios.post("/types", category, {
+      await axios.post("https://expense-app99.herokuapp.com/types", category, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate(-1);
-      console.log(res);
     } catch (error) {}
   };
   return (
