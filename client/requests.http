@@ -1,2 +1,19 @@
 // test
-POST http://localhost:3000//blogs
+POST http://localhost:3000/users
+content-type: application/json
+
+{
+  "name": "test",
+  "email": "nicosohta0318@gamil.com",
+  "password": "Sohta0318"
+}
+
+# create income
+POST http://localhost:3000/users
+content-type: application/json
+
+{
+  "name": "test",
+  "email": "nicosohta0318@gamil.com",
+  "password": "Sohta0318"
+}

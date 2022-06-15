@@ -4,7 +4,10 @@ const router = new express.Router();
 const auth = require("../middleware/auth");
 
 router.post("/spends", auth, async (req, res) => {
-  const spend = new Spend({ ...req.body, owner: req.user._id });
+  const spend = new Spend({
+    ...req.body,
+    owner: req.user._id,
+  });
 
   try {
     await spend.save();
@@ -40,13 +43,9 @@ router.get("/spends/:id", auth, async (req, res) => {
   }
 });
 
-router.get("/spends_delete/:id", (req, res) => {
-  res.render("spends");
-});
-
 router.patch("/spends/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["description", "title", "comments"];
+  const allowedUpdates = ["amount", "date", "comment", "type"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );

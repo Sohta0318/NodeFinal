@@ -4,7 +4,10 @@ const router = new express.Router();
 const auth = require("../middleware/auth");
 
 router.post("/incomes", auth, async (req, res) => {
-  const income = new Income({ ...req.body, owner: req.user._id });
+  const income = new Income({
+    ...req.body,
+    owner: req.user._id,
+  });
 
   try {
     await income.save();
@@ -42,7 +45,7 @@ router.get("/incomes/:id", auth, async (req, res) => {
 
 router.patch("/incomes/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["amount", "date", "comment"];
+  const allowedUpdates = ["amount", "date", "comment", "type"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );

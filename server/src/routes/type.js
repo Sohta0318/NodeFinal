@@ -24,6 +24,22 @@ router.get("/types", auth, async (req, res) => {
   }
 });
 
+router.get("/types/:id", auth, async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const type = await Type.find({ _id, owner: req.user._id });
+
+    if (!type) {
+      return res.status(404).send();
+    }
+
+    res.send(type);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 router.delete("/types/:id", auth, async (req, res) => {
   try {
     const type = await Type.findOneAndDelete({
